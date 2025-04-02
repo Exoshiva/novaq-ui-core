@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NovaQ UI</title>
+</head>
+<body>
+    <h1>NovaQ Core – Persönlicher KI-Assistent</h1>
+
+    <form method="POST" action="/novaq">
+        <input type="text" name="input" placeholder="Deine Eingabe..." required />
+        <button type="submit">Absenden</button>
+    </form>
+
+    {% if user_input %}
+        <h3>🧠 Deine Frage:</h3>
+        <p>{{ user_input }}</p>
+    {% endif %}
+
+    {% if answer %}
+        <h3>💬 NovaQ Antwort:</h3>
+        <p>{{ answer }}</p>
+    {% endif %}
+</body>
+</html>
