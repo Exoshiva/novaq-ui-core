@@ -1,25 +1,26 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <title>NovaQ UI</title>
+    <meta charset="UTF-8">
+    <title>NovaQ Core UI</title>
 </head>
 <body>
-    <h1>NovaQ Core – Persönlicher KI-Assistent</h1>
+    <h1>NovaQ Core Interface</h1>
+    <input id="inputText" type="text" placeholder="Deine Eingabe...">
+    <button onclick="sendToGPT()">Senden</button>
+    <p id="response"></p>
 
-    <form method="POST" action="/novaq">
-        <input type="text" name="input" placeholder="Deine Eingabe..." required />
-        <button type="submit">Absenden</button>
-    </form>
-
-    {% if user_input %}
-        <h3>🧠 Deine Frage:</h3>
-        <p>{{ user_input }}</p>
-    {% endif %}
-
-    {% if answer %}
-        <h3>💬 NovaQ Antwort:</h3>
-        <p>{{ answer }}</p>
-    {% endif %}
+    <script>
+        async function sendToGPT() {
+            const userInput = document.getElementById("inputText").value;
+            const res = await fetch("/novaq", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input: userInput })
+            });
+            const data = await res.json();
+            document.getElementById("response").innerText = data.reply;
+        }
+    </script>
 </body>
 </html>
