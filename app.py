@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify, render_template
 import openai
 import os
@@ -6,19 +5,21 @@ import os
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
 
 @app.route("/novaq", methods=["POST"])
 def novaq():
-    user_input = request.form.get("input")
+    data = request.json
+    user_input = data.get("input")
+
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Du bist NovaQ Core."},
+            {"role": "system", "content": "Du bist NovaQ Core, ein KI-Modul für Systemunterstützung."},
             {"role": "user", "content": user_input}
         ]
     )
-    reply = response.choices[0].message["content"]
-    return render_template("index.html", answer=reply, user_input=user_input)
+
+    return jsonify({"reply": response.choices[0].message["content"]})
