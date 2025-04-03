@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NovaQ Core UI</title>
+</head>
+<body>
+    <h1>Stelle deine Frage an NovaQ Core</h1>
+    <form method="post" action="/novaq">
+        <textarea name="input" rows="4" cols="50" placeholder="Deine Frage..."></textarea><br>
+        <input type="submit" value="Absenden">
+    </form>
+
+    {% if reply %}
+        <h3>Antwort:</h3>
+        <p>{{ reply }}</p>
+    {% endif %}
+</body>
+</html>
